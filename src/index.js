@@ -25,15 +25,24 @@ const PORT = process.env.PORT || 4001;
 // Connexion à la base de données
 connectDB();
 
-// Middlewares
+const allowedOrigins = [
+  'https://e-garderie.vercel.app',  // Production
+  'http://localhost:3000',          // Développement
+];
+
 const corsOptions = {
-  origin: 'https://e-garderie-m0ibojkyf-gueyes-projects.vercel.app', // URL de votre frontend
-  credentials: true, // Permet l'envoi de credentials (cookies, headers d'auth)
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
-  allowedHeaders: ['Content-Type', 'Authorization'] // Headers autorisés
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Autoriser
+    } else {
+      callback(new Error('Not allowed by CORS')); // Bloquer
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Remplacer la ligne existante app.use(cors())
 app.use(cors(corsOptions));
 
 app.use(express.json({ limit: '10mb' }));
