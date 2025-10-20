@@ -27,7 +27,7 @@ connectDB();
 
 // Middlewares
 const corsOptions = {
-  origin: 'http://localhost:5173', // URL de votre frontend
+  origin: 'https://e-garderie-m0ibojkyf-gueyes-projects.vercel.app', // URL de votre frontend
   credentials: true, // Permet l'envoi de credentials (cookies, headers d'auth)
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
   allowedHeaders: ['Content-Type', 'Authorization'] // Headers autorisés
