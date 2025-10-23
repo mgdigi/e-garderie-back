@@ -26,8 +26,8 @@ const PORT = process.env.PORT || 4001;
 connectDB();
 
 const allowedOrigins = [
-  'https://e-garderie.vercel.app',  // Production
-  'http://localhost:3000',          // Développement
+  'https://e-garderie.vercel.app', 
+  'http://localhost:5173',          
 ];
 
 const corsOptions = {
