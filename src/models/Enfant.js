@@ -96,11 +96,11 @@ const enfantSchema = new mongoose.Schema({
     }
   },
 
-  // Section/Classe
-  section: {
-    type: String,
-    required: [true, 'La section est requise'],
-    enum: ['BEBES', 'MOYENS', 'GRANDS']
+  // Section/Classe - Référence vers la classe
+  classeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Classe',
+    required: [true, 'La classe est requise']
   },
 
   // Statut et dates
@@ -151,7 +151,7 @@ const enfantSchema = new mongoose.Schema({
 enfantSchema.index({ nom: 1, prenom: 1 });
 enfantSchema.index({ numeroInscription: 1 }, { unique: true });
 enfantSchema.index({ crecheId: 1 });
-enfantSchema.index({ section: 1 });
+enfantSchema.index({ classeId: 1 });
 enfantSchema.index({ statut: 1 });
 
 // Méthode virtuelle pour calculer l'âge

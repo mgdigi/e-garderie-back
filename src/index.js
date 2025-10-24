@@ -15,6 +15,7 @@ import menuRoutes from './routes/menu.js';
 import factureRoutes from './routes/facture.js';
 import dashboardRoutes from './routes/dashboard.js';
 import rapportRoutes from './routes/rapports.js';
+import parametresRoutes from './routes/parametres.js';
 
 // Configuration
 dotenv.config();
@@ -63,6 +64,7 @@ app.use('/api/menus', menuRoutes);
 app.use('/api/factures', factureRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/rapports', rapportRoutes);
+app.use('/api/parametres', parametresRoutes);
 
 // Route de test
 app.get('/', (req, res) => {

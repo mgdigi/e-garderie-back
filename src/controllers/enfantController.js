@@ -21,6 +21,7 @@ export const getEnfants = async (req, res) => {
 
     const enfants = await Enfant.find(query)
       .populate('crecheId', 'nom')
+      .populate('classeId', 'nom capacite ageMin ageMax')
       .sort({ nom: 1, prenom: 1 });
 
     res.json({
@@ -45,7 +46,8 @@ export const getEnfant = async (req, res) => {
     const enfant = await Enfant.findOne({
       _id: req.params.id,
       crecheId
-    }).populate('crecheId', 'nom');
+    }).populate('crecheId', 'nom')
+      .populate('classeId', 'nom capacite ageMin ageMax');
 
     if (!enfant) {
       return res.status(404).json({
@@ -77,7 +79,7 @@ export const createEnfant = async (req, res) => {
       prenom,
       dateNaissance,
       sexe,
-      section,
+      classeId,
       dateInscription,
       tarifMensuel,
       fraisInscription,
@@ -97,7 +99,7 @@ export const createEnfant = async (req, res) => {
       dateNaissance,
       sexe: sexe === 'M' ? 'MASCULIN' : 'FEMININ',
       numeroInscription,
-      section: section ,
+      classeId: classeId,
       dateInscription,
       tarifMensuel: tarifMensuel || 150000,
       fraisInscription: fraisInscription || 50000,
@@ -162,7 +164,9 @@ export const createEnfant = async (req, res) => {
       await factureInscription.save();
     }
 
-    const enfantWithCreche = await Enfant.findById(enfant._id).populate('crecheId', 'nom');
+    const enfantWithCreche = await Enfant.findById(enfant._id)
+      .populate('crecheId', 'nom')
+      .populate('classeId', 'nom capacite ageMin ageMax');
 
     res.status(201).json({
       success: true,
@@ -201,7 +205,7 @@ export const updateEnfant = async (req, res) => {
       prenom,
       dateNaissance,
       sexe,
-      section,
+      classeId,
       statut,
       tarifMensuel,
       fraisInscription,
@@ -220,7 +224,7 @@ export const updateEnfant = async (req, res) => {
         prenom,
         dateNaissance,
         sexe: sexe === 'M' ? 'MASCULIN' : 'FEMININ',
-        section: section,
+        classeId: classeId,
         statut,
         tarifMensuel,
         fraisInscription,
@@ -239,7 +243,8 @@ export const updateEnfant = async (req, res) => {
         }
       },
       { new: true, runValidators: true }
-    ).populate('crecheId', 'nom');
+    ).populate('crecheId', 'nom')
+      .populate('classeId', 'nom capacite ageMin ageMax');
 
     if (!enfant) {
       return res.status(404).json({
