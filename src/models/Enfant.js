@@ -21,7 +21,7 @@ const enfantSchema = new mongoose.Schema({
     required: [true, 'Le sexe est requis']
   },
   photo: {
-    type: String, // URL de la photo
+    type: String, 
     default: null
   },
   numeroInscription: {
@@ -149,7 +149,7 @@ const enfantSchema = new mongoose.Schema({
 
 // Index pour optimiser les recherches
 enfantSchema.index({ nom: 1, prenom: 1 });
-enfantSchema.index({ numeroInscription: 1 }, { unique: true });
+enfantSchema.index({ numeroInscription: 1 });
 enfantSchema.index({ crecheId: 1 });
 enfantSchema.index({ classeId: 1 });
 enfantSchema.index({ statut: 1 });
@@ -168,7 +168,7 @@ enfantSchema.virtual('age').get(function() {
   return age;
 });
 
-// Méthode pour générer un numéro d'inscription unique
+// Méthode pour générer un numéro d'inscription unique par crèche
 enfantSchema.statics.generateNumeroInscription = async function(crecheId) {
   const year = new Date().getFullYear();
 

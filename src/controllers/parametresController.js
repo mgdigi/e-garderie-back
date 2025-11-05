@@ -43,7 +43,7 @@ export const getParametres = async (req, res) => {
           heuresOuverture: creche.heuresOuverture,
           joursOuverture: creche.joursOuverture,
           fraisInscription: creche.tarifs?.inscription || 0,
-          mensualite: creche.tarifs?.mensuel || 0
+          tarifMensuel: creche.tarifs?.mensuel || 0
         },
         classes
       }

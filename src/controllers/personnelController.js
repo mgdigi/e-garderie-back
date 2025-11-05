@@ -1,12 +1,12 @@
 import Personnel from '../models/Personnel.js';
 
 // @desc    Obtenir tout le personnel de la crèche
-// @route   GET /api/personnel
+// @route   GET /api/personnel?page=1&limit=8
 // @access  Private
 export const getPersonnel = async (req, res) => {
   try {
     const crecheId = req.user.crecheId?._id || req.user.crecheId;
-    const { statut, poste, search } = req.query;
+    const { statut, poste, search, page = 1, limit = 8 } = req.query;
 
     let query = { crecheId };
 
@@ -22,15 +22,34 @@ export const getPersonnel = async (req, res) => {
       ];
     }
 
+    // Pagination
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const skip = (pageNum - 1) * limitNum;
+
+    // Obtenir le total pour la pagination
+    const total = await Personnel.countDocuments(query);
+
     const personnel = await Personnel.find(query)
       .populate('crecheId', 'nom')
       .populate('userId', 'email')
-      .sort({ nom: 1, prenom: 1 });
+      .sort({ nom: 1, prenom: 1 })
+      .skip(skip)
+      .limit(limitNum);
+
+    const totalPages = Math.ceil(total / limitNum);
 
     res.json({
       success: true,
       data: personnel,
-      count: personnel.length
+      pagination: {
+        currentPage: pageNum,
+        totalPages,
+        totalItems: total,
+        itemsPerPage: limitNum,
+        hasNextPage: pageNum < totalPages,
+        hasPrevPage: pageNum > 1
+      }
     });
   } catch (error) {
     console.error('Erreur lors de la récupération du personnel:', error);

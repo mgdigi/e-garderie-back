@@ -55,154 +55,131 @@ const seedData = async () => {
       phone: '+221 77 123 45 67',
       crecheId: creche._id
     });
+console.log('Admin créé:', admin.email);
 
-    console.log('Admin créé:', admin.email);
+// Créer du personnel de test
+const personnel = await Personnel.create([
+  {
+    nom: 'Diop',
+    prenom: 'Fatou',
+    poste: 'Éducatrice',
+    telephone: '+221 77 111 11 11',
+    email: 'fatou.diop@e-garderie.sn',
+    salaire: 200000,
+    typeContrat: 'CDI',
+    dateEmbauche: new Date('2024-01-15'),
+    statut: 'ACTIF',
+    crecheId: creche._id
+  },
+  {
+    nom: 'Ndiaye',
+    prenom: 'Mamadou',
+    poste: 'Éducateur',
+    telephone: '+221 77 222 22 22',
+    email: 'mamadou.ndiaye@e-garderie.sn',
+    salaire: 200000,
+    typeContrat: 'CDI',
+    dateEmbauche: new Date('2024-02-01'),
+    statut: 'ACTIF',
+    crecheId: creche._id
+  },
+  {
+    nom: 'Sarr',
+    prenom: 'Aminata',
+    poste: 'Directrice Adjointe',
+    telephone: '+221 77 333 33 33',
+    email: 'aminata.sarr@e-garderie.sn',
+    salaire: 250000,
+    typeContrat: 'CDI',
+    dateEmbauche: new Date('2023-09-01'),
+    statut: 'ACTIF',
+    crecheId: creche._id
+  },
+  {
+    nom: 'Ba',
+    prenom: 'Ibrahima',
+    poste: 'Agent d\'entretien',
+    telephone: '+221 77 444 44 44',
+    email: 'ibrahima.ba@e-garderie.sn',
+    salaire: 150000,
+    typeContrat: 'CDD',
+    dateEmbauche: new Date('2024-03-01'),
+    statut: 'ACTIF',
+    crecheId: creche._id
+  },
+  {
+    nom: 'Gaye',
+    prenom: 'Sokhna',
+    poste: 'Cuisinière',
+    telephone: '+221 77 555 55 55',
+    email: 'sokhna.gaye@e-garderie.sn',
+    salaire: 180000,
+    typeContrat: 'CDI',
+    dateEmbauche: new Date('2024-01-01'),
+    statut: 'ACTIF',
+    crecheId: creche._id
+  }
+]);
 
-    // Créer du personnel
-    const personnel = await Personnel.create([
-      {
-        nom: 'Diop',
-        prenom: 'Fatou',
-        poste: 'DIRECTRICE',
-        telephone: '+221 77 111 11 11',
-        email: 'directrice@e-garderie.sn',
-        salaire: 300000,
-        typeContrat: 'CDI',
-        dateEmbauche: new Date('2023-01-15'),
-        crecheId: creche._id
-      },
-      {
-        nom: 'Ndiaye',
-        prenom: 'Mamadou',
-        poste: 'EDUCATRICE',
-        telephone: '+221 77 222 22 22',
-        email: 'educatrice1@e-garderie.sn',
-        salaire: 200000,
-        typeContrat: 'CDI',
-        dateEmbauche: new Date('2023-02-01'),
-        crecheId: creche._id
-      },
-      {
-        nom: 'Sarr',
-        prenom: 'Aminata',
-        poste: 'CUISINIER',
-        telephone: '+221 77 333 33 33',
-        email: 'cuisinier@e-garderie.sn',
-        salaire: 180000,
-        typeContrat: 'CDI',
-        dateEmbauche: new Date('2023-03-01'),
-        crecheId: creche._id
-      }
-    ]);
+console.log(`${personnel.length} membres du personnel créés`);
 
-    console.log('Personnel créé:', personnel.length, 'membres');
+// Créer des enfants de test
+const enfants = await Enfant.create([
+  {
+    nom: 'Diallo',
+    prenom: 'Amina',
+    dateNaissance: new Date('2022-05-15'),
+    sexe: 'FEMININ',
+    numeroInscription: '2024-0001',
+    classeId: null, // Sera défini après création des classes
+    dateInscription: new Date('2024-09-01'),
+    tarifMensuel: 150000,
+    fraisInscription: 50000,
+    statut: 'ACTIF',
+    crecheId: creche._id,
+    parents: [{
+      nom: 'Diallo',
+      prenom: 'Mamadou',
+      relation: 'PERE',
+      telephone: '+221 77 666 66 66',
+      estContactUrgence: true
+    }],
+    sante: {
+      allergies: ['Arachides'],
+      restrictionsAlimentaires: [],
+      remarquesMedicales: ''
+    }
+  },
+  {
+    nom: 'Sow',
+    prenom: 'Omar',
+    dateNaissance: new Date('2021-08-20'),
+    sexe: 'MASCULIN',
+    numeroInscription: '2024-0002',
+    classeId: null,
+    dateInscription: new Date('2024-09-01'),
+    tarifMensuel: 150000,
+    fraisInscription: 50000,
+    statut: 'ACTIF',
+    crecheId: creche._id,
+    parents: [{
+      nom: 'Sow',
+      prenom: 'Fatima',
+      relation: 'MERE',
+      telephone: '+221 77 777 77 77',
+      estContactUrgence: true
+    }],
+    sante: {
+      allergies: [],
+      restrictionsAlimentaires: ['Sans porc'],
+      remarquesMedicales: ''
+    }
+  }
+]);
 
-    // Créer des enfants avec leurs parents
-    const enfants = await Enfant.create([
-      {
-        nom: 'Ba',
-        prenom: 'Amadou',
-        dateNaissance: new Date('2021-05-15'),
-        sexe: 'MASCULIN',
-        numeroInscription: '2024-001',
-        section: 'MOYENS',
-        tarifMensuel: 150000,
-        fraisInscription: 50000,
-        parents: [{
-          nom: 'Ba',
-          prenom: 'Papa',
-          relation: 'PERE',
-          telephone: '+221 77 444 44 44',
-          email: 'papa.ba@email.com',
-          adresse: 'Dakar, Sénégal',
-          estContactUrgence: true
-        }],
-        crecheId: creche._id
-      },
-      {
-        nom: 'Diallo',
-        prenom: 'Aïcha',
-        dateNaissance: new Date('2020-08-20'),
-        sexe: 'FEMININ',
-        numeroInscription: '2024-002',
-        section: 'GRANDS',
-        tarifMensuel: 150000,
-        fraisInscription: 50000,
-        parents: [{
-          nom: 'Diallo',
-          prenom: 'Maman',
-          relation: 'MERE',
-          telephone: '+221 77 555 55 55',
-          email: 'maman.diallo@email.com',
-          adresse: 'Dakar, Sénégal',
-          estContactUrgence: true
-        }],
-        crecheId: creche._id
-      },
-      {
-        nom: 'Sow',
-        prenom: 'Oumar',
-        dateNaissance: new Date('2022-12-10'),
-        sexe: 'MASCULIN',
-        numeroInscription: '2024-003',
-        section: 'BEBES',
-        tarifMensuel: 150000,
-        fraisInscription: 50000,
-        parents: [{
-          nom: 'Sow',
-          prenom: 'Papa',
-          relation: 'PERE',
-          telephone: '+221 77 666 66 66',
-          email: 'papa.sow@email.com',
-          adresse: 'Dakar, Sénégal',
-          estContactUrgence: true
-        }],
-        crecheId: creche._id
-      }
-    ]);
+console.log(`${enfants.length} enfants créés`);
+   
 
-    console.log('Enfants créés:', enfants.length);
-
-    // Créer des factures pour les enfants
-    const factures = await Facture.create([
-      {
-        enfantId: enfants[0]._id,
-        mois: 10,
-        annee: 2024,
-        montant: 150000,
-        type: 'MENSUALITE',
-        description: 'Mensualité octobre 2024',
-        crecheId: creche._id
-      },
-      {
-        enfantId: enfants[1]._id,
-        mois: 10,
-        annee: 2024,
-        montant: 150000,
-        type: 'MENSUALITE',
-        description: 'Mensualité octobre 2024',
-        crecheId: creche._id
-      },
-      {
-        enfantId: enfants[2]._id,
-        mois: 10,
-        annee: 2024,
-        montant: 150000,
-        type: 'MENSUALITE',
-        description: 'Mensualité octobre 2024',
-        crecheId: creche._id
-      }
-    ]);
-
-    console.log('Factures créées:', factures.length);
-
-    console.log('\n=== DONNÉES DE TEST CRÉÉES ===');
-    console.log('Crèche:', creche.nom);
-    console.log('Admin: admin@e-garderie.sn / admin123');
-    console.log('Personnel:', personnel.length, 'membres');
-    console.log('Enfants:', enfants.length);
-    console.log('Factures:', factures.length);
-    console.log('\n=== SEEDING TERMINÉ ===');
 
   } catch (error) {
     console.error('Erreur lors du seeding:', error);
