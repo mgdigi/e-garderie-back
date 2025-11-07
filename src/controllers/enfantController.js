@@ -84,7 +84,11 @@ export const createEnfant = async (req, res) => {
       tarifMensuel,
       fraisInscription,
       parentNom,
+      parentPrenom,
       parentTelephone,
+      parentEmail,
+      parentProfession,
+      parentRelation,
       adresse,
       allergies,
       restrictionsAlimentaires,
@@ -106,10 +110,12 @@ export const createEnfant = async (req, res) => {
       crecheId,
       parents: parentNom ? [{
         nom: parentNom,
-        prenom: 'Parent',
-        relation: 'PERE',
+        prenom: parentPrenom || '',
+        relation: parentRelation || 'PERE',
         telephone: parentTelephone || '',
+        email: parentEmail || '',
         adresse: adresse || '',
+        profession: parentProfession || '',
         estContactUrgence: true
       }] : [],
       sante: {
@@ -210,7 +216,11 @@ export const updateEnfant = async (req, res) => {
       tarifMensuel,
       fraisInscription,
       parentNom,
+      parentPrenom,
       parentTelephone,
+      parentEmail,
+      parentProfession,
+      parentRelation,
       adresse,
       allergies,
       restrictionsAlimentaires,
@@ -230,10 +240,12 @@ export const updateEnfant = async (req, res) => {
         fraisInscription,
         parents: parentNom ? [{
           nom: parentNom,
-          prenom: '',
-          relation: 'PERE',
+          prenom: parentPrenom || '',
+          relation: parentRelation || 'PERE',
           telephone: parentTelephone || '',
+          email: parentEmail || '',
           adresse: adresse || '',
+          profession: parentProfession || '',
           estContactUrgence: true
         }] : [],
         sante: {
